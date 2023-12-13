@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/head}">
+
+</head>
+<body>
+<div class="container-fluid">
+    <header th:replace="~fragments/navbar"></header>
+
+<main class="mt-4">
+    <div class="jumbotron mt-3 mc-404">
+        <h1 class="mc-colorize">Page Not Found: ERROR 404!</h1>
+        <hr class="hr-2"/>
+        <h4 class="mc-colorize">This page doesn't exist...</h4>
+    </div>
+</main>
+    <footer th:replace="~fragments/navbar::footer"></footer>
+</div>
+</body>
+</html>

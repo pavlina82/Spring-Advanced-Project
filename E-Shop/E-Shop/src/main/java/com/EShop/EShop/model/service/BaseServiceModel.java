@@ -1,9 +1,7 @@
 package com.EShop.EShop.model.service;
 
-import jakarta.persistence.MappedSuperclass;
 
-@MappedSuperclass
-public class BaseServiceModel {
+public  class BaseServiceModel {
 
     private Long id;
 

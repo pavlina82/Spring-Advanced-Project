@@ -10,8 +10,7 @@ public class Offer extends BaseEntity{
 
     @ManyToOne(targetEntity = Product.class)
     @JoinColumn(
-            name = "product_id",
-            referencedColumnName = "id"
+            name = "product_id"
     )
     private Product product;
 

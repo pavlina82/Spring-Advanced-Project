@@ -1,6 +1,7 @@
 package com.EShop.EShop.service.impl;
 
 import com.EShop.EShop.exception.OrderNotFoundException;
+import com.EShop.EShop.exception.ReceiptNotFoundException;
 import com.EShop.EShop.model.entity.Order;
 import com.EShop.EShop.model.entity.Receipt;
 import com.EShop.EShop.model.entity.User;
@@ -17,9 +18,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.EShop.EShop.constants.ValidationMessage.ORDER_NOT_FOUND_EX_MSG;
-import static com.EShop.EShop.constants.ValidationMessage.USER_NOT_FOUND_EX_MSG;
+import static com.EShop.EShop.constants.ValidationMessage.*;
 
 @Service
 public class ReceiptServiceImpl implements ReceiptService {
@@ -42,6 +44,23 @@ public class ReceiptServiceImpl implements ReceiptService {
     }
 
     @Override
+    public List<ReceiptServiceModel> findAllReceiptsByUsername(String username) {
+        return this.receiptRepository.findAllReceiptsByRecipient_UsernameOrderByIssuedOn(username)
+                .stream()
+                .map(receipt -> this.modelMapper.map(receipt, ReceiptServiceModel.class))
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ReceiptServiceModel> findAllReceipts() {
+        return this.receiptRepository.findAll()
+                .stream()
+                .map(receipt -> this.modelMapper.map(receipt, ReceiptServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void receiptRegister(ReceiptServiceModel receiptServiceModel) {
         if (!receiptValidationService.isValid(receiptServiceModel)) {
             throw new IllegalArgumentException();
@@ -49,6 +68,38 @@ public class ReceiptServiceImpl implements ReceiptService {
         Receipt receipt = this.modelMapper.map(receiptServiceModel, Receipt.class);
         this.receiptRepository.save(receipt);
 
+    }
+
+    @Override
+    public void createReceipt(Long orderId, String name) {
+        Order order = this.orderRepository.findById(orderId)
+                .orElseThrow();
+        User user = this.userRepository.findByUsername(name)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found."));
+        Receipt receipt = new Receipt();
+        receipt.setFee(order.getTotalPrice());
+        receipt.setIssuedOn(LocalDateTime.now());
+        receipt.setOrder(order);
+        receipt.setRecipient(receipt.getRecipient());
+
+        this.receiptRepository.save(receipt);
+        this.orderService.changeOrderStatus(orderId);
+    }
+
+    @Override
+    public ReceiptServiceModel getReceiptById(Long id) {
+        Receipt receipt = this.receiptRepository.findById(id)
+                .orElseThrow(() -> new ReceiptNotFoundException(RECEIPT_NAME_EXIST_EX_MSG));
+        return modelMapper.map(receipt, ReceiptServiceModel.class);
+
+    }
+
+    @Override
+    public ReceiptServiceModel findReceiptById(Long receiptId) {
+        Receipt receipt = this.receiptRepository.findById(receiptId)
+                .orElseThrow();
+
+        return modelMapper.map(receipt, ReceiptServiceModel.class);
     }
 
     @Override

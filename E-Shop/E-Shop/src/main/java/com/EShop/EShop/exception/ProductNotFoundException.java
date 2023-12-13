@@ -9,7 +9,13 @@ import static com.EShop.EShop.constants.ValidationMessage.PRODUCT_NOT_FOUND_EX_M
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = PRODUCT_NOT_FOUND_EX_MSG)
 public class ProductNotFoundException extends RuntimeException {
 
+    private int statusCode;
+
     public ProductNotFoundException(String message) {
         super(message);
+    }
+
+    public int getStatusCode() {
+        return statusCode;
     }
 }

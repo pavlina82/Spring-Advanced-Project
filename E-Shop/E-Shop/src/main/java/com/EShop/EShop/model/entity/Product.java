@@ -19,18 +19,16 @@ public class Product extends BaseEntity {
     private BigDecimal price;
 
     @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    private String image_url;
 
     @ManyToMany(targetEntity = Category.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "products_categories",
             joinColumns = @JoinColumn(
-                    name = "product_id",
-                    referencedColumnName = "id"
+                    name = "product_id"
             ),
             inverseJoinColumns = @JoinColumn(
-                    name = "category_id",
-                    referencedColumnName = "id"
+                    name = "category_id"
             )
     )
     private List<Category> categories;
@@ -70,12 +68,12 @@ public class Product extends BaseEntity {
         return this;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public Product setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public Product setImage_url(String image_url) {
+        this.image_url = image_url;
         return this;
     }
 
@@ -92,9 +90,8 @@ public class Product extends BaseEntity {
         return isDeleted;
     }
 
-    public Product setDeleted(boolean deleted) {
+    public void setDeleted(boolean deleted) {
         isDeleted = deleted;
-        return this;
     }
 
 }

@@ -17,15 +17,13 @@ public class Receipt extends BaseEntity{
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(
-            name = "recipient_id",
-            referencedColumnName = "id"
+            name = "recipient_id"
     )
     private User recipient;
 
     @OneToOne(targetEntity = Order.class)
     @JoinColumn(
-            name = "order_id",
-            referencedColumnName = "id"
+            name = "order_id"
     )
     private Order order;
 

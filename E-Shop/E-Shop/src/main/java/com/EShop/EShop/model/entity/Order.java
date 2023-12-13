@@ -14,8 +14,7 @@ public class Order extends BaseEntity {
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(
-            name = "customer_id",
-            referencedColumnName = "id"
+            name = "customer_id"
     )
     private User customer;
 
@@ -39,12 +38,10 @@ public class Order extends BaseEntity {
     @JoinTable(
             name = "orders_products",
             joinColumns = @JoinColumn(
-                    name = "order_id",
-                    referencedColumnName = "id"
+                    name = "order_id"
             ),
             inverseJoinColumns = @JoinColumn(
-                    name = "product_id",
-                    referencedColumnName = "id"
+                    name = "product_id"
             )
     )
     private List<OrderProduct> products;

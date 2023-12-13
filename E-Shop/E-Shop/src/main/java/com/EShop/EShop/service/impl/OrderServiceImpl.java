@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.EShop.EShop.constants.ValidationMessage.ORDER_NOT_FOUND_EX_MSG;
 
@@ -51,6 +53,45 @@ public class OrderServiceImpl implements OrderService {
         order.setStatusDate(LocalDateTime.now());
         changeStatus(order);
         this.orderRepository.save(order);
+    }
+
+    @Override
+    public List<OrderServiceModel> findAllOrders() {
+        return this.orderRepository.findAll()
+                .stream()
+                .map(order -> modelMapper.map(order, OrderServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderServiceModel findOrderById(Long id) {
+        return this.orderRepository.findById(id)
+                .map(order -> this.modelMapper.map(order, OrderServiceModel.class))
+                .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND_EX_MSG));
+    }
+
+    @Override
+    public List<OrderServiceModel> findOrdersByCustomer(String customerName) {
+        return this.orderRepository.findAllOrdersByCustomer_UsernameOrderByIssuedOn(customerName)
+                .stream().map(order -> modelMapper.map(order, OrderServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderServiceModel> findOrdersByCustomerAndStatus(String customerName, StatusEnums statusEnums) {
+        return this.orderRepository.findAllOrdersByCustomerUsernameAndStatus_OrderByIssuedOn(customerName,statusEnums)
+                .stream()
+                .map(order -> modelMapper.map(order, OrderServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderServiceModel> findOrdersByStatus(StatusEnums statusEnums) {
+        return this.orderRepository.findAllOrdersByStatus_OrderByIssuedOn(statusEnums)
+                .stream()
+                .map(order -> modelMapper.map(order, OrderServiceModel.class))
+                .collect(Collectors.toList());
+
     }
 
     private void changeStatus(Order order) {

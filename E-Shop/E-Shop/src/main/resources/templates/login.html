@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/head}">
 
-</head>
+   </head>
 <body>
 <header th:replace="~fragments/navbar"></header>
 <main class="mt-5">
@@ -36,7 +36,7 @@
         </form>
         <th:block th:if="${param.error}">
             <div class="text-center" style="color: red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}">
-                <!--Bad Credentials-->
+
             </div>
         </th:block>
 

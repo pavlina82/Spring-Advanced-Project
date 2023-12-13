@@ -1,20 +1,46 @@
 package com.EShop.EShop.model.service;
 
 import com.EShop.EShop.model.enums.StatusEnums;
+import jakarta.validation.constraints.NotNull;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class OrderServiceModel extends BaseServiceModel{
 
+    @NotNull
+    private List<OrderProductServiceModel> products;
+
+    @NotNull
     private UserServiceModel customer;
+
+    @NotNull
     private BigDecimal totalPrice;
+
+    @NotNull
     private LocalDateTime issuedOn;
+
+    @NotNull
     private LocalDateTime statusDate;
+
+    @NotNull
     private String shippingAddress;
+
+    @NotNull
     private StatusEnums status;
 
     public OrderServiceModel() {
+    }
+
+    public List<OrderProductServiceModel> getProducts() {
+        return products;
+    }
+
+    public OrderServiceModel setProducts(List<OrderProductServiceModel> products) {
+        this.products = products;
+        return this;
     }
 
     public UserServiceModel getCustomer() {

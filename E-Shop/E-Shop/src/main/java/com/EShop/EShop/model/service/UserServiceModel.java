@@ -2,6 +2,7 @@ package com.EShop.EShop.model.service;
 
 import com.EShop.EShop.model.entity.Role;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class UserServiceModel extends BaseServiceModel{
@@ -12,6 +13,10 @@ public class UserServiceModel extends BaseServiceModel{
     private String address;
     private String email;
     private Set<Role> authorities;
+
+    public UserServiceModel() {
+        this.authorities = new HashSet<>();
+    }
 
     public String getUsername() {
         return username;

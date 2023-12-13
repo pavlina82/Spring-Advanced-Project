@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
   <head th:replace="~{fragments/head}">
-</head>
+
 <body>
 <header th:replace="~fragments/navbar"></header>
 
@@ -17,9 +17,9 @@
                         <button class="btn btn-secondary mr-1" onclick="findProductByProductName()">
                             <i class="fas fa-search"></i> Find</button>
                         </span>
-          <input type="text" th:name="username"
-                 class="form-control w-50" id="inputProductName"
-                 placeholder="Product name..."/>
+            <label for="inputProductName"></label><input type="text" th:name="username"
+                                                         class="form-control w-50" id="inputProductName"
+                                                         placeholder="Product name..."/>
         </div>
       </div>
       <div class="print-container container-fluid">

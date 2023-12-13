@@ -1,13 +1,15 @@
 package com.EShop.EShop.model.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public  class User extends BaseEntity  implements UserDetails {
 
 
     @Column(nullable = false, unique = true)
@@ -24,8 +26,8 @@ public class User extends BaseEntity {
 
 
     @ManyToMany
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> authorities;
 
 
@@ -38,6 +40,8 @@ public class User extends BaseEntity {
     public String getUsername() {
         return username;
     }
+
+
 
     public User setUsername(String username) {
         this.username = username;
@@ -57,9 +61,8 @@ public class User extends BaseEntity {
         return password;
     }
 
-    public User setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
     public String getAddress() {
@@ -71,13 +74,38 @@ public class User extends BaseEntity {
         return this;
     }
 
+
     public Set<Role> getAuthorities() {
         return authorities;
     }
 
-    public User setAuthorities(Set<Role> authorities) {
+    public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
-        return this;
     }
+
+    @Override
+    @Transient
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    @Transient
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    @Transient
+    public boolean isEnabled() {
+        return false;
+    }
+
 
 }

@@ -1,13 +1,15 @@
 package com.EShop.EShop.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 
 @Entity
 @Table(name = "categories")
 public class Category extends BaseEntity{
 
-    @Column(name = "category_name",nullable = false, unique = true, updatable = true)
+    @Column(name = "category_name",nullable = false, unique = true)
     private String name;
 
 

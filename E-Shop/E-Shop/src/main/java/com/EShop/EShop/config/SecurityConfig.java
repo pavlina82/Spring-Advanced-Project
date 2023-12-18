@@ -25,7 +25,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, OAuthSuccessHandler oAuthSuccessHandler) throws Exception {
-        httpSecurity.authorizeHttpRequests(authorizeRequests ->
+       return httpSecurity.authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                                 .requestMatchers("/css/**", "/js/**", "/products/fetch/sale", "/fetch/sales/All").permitAll()
@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .build();
 
 
-        return null;
+       
     }
 
     @Bean

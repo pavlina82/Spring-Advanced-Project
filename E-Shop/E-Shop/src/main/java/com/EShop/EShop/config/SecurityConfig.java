@@ -24,10 +24,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, OAuthSuccessHandler oAuthSuccessHandler) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
        return httpSecurity.authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
+                        authorizeRequests
                                 .requestMatchers("/css/**", "/js/**", "/products/fetch/sale", "/fetch/sales/All").permitAll()
                                 .requestMatchers("/", "/login", "/register").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
@@ -41,9 +40,7 @@ public class SecurityConfig {
                 }).logout(logout -> {
                     logout.logoutUrl("/login?logout").permitAll()
                             .invalidateHttpSession(true);
-                }).oauth2Login(oauth ->
-                        oauth.successHandler(oAuthSuccessHandler))
-                .build();
+                }).build();
 
 
        

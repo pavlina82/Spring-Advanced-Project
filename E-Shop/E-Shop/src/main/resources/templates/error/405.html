@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<th:block>
+    <div th:replace="~{fragments/head.html}"></div>
+</th:block>
+<body>
+<th:block>
+    <div th:replace="~{fragments/navbar.html}"></div>
+</th:block>
+<div class="container-fluid">
+
+    <main class="mt-4">
+        <div class="jumbotron mt-3 bg-re">
+            <h1 class="text-white">Not Allowed Page: ERROR status=405!</h1>
+            <hr class="hr-2"/>
+            <h4 class="text-white">You are not allowed to execute the current operation!</h4>
+        </div>
+    </main>
+</div>
+<th:block>
+    <footer th:replace="~{fragments/footer.html}"></footer>
+
+</th:block>
+
+</body>
+</html>
